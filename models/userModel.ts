@@ -1,40 +1,40 @@
 import mongoose from "mongoose"
-const Role = require('./roleModel').schema
 
 const userSchema = new mongoose.Schema({
-    first_name:{
+    first_name: {
         type: String,
-        required:[true, "Please provide you're first name."],
+        required: [true, "Please provide you're first name."],
     },
-    last_name:{
+    last_name: {
         type: String,
-        required:[true, "Please provide you're last name."],
+        required: [true, "Please provide you're last name."],
     },
-    email:{
+    email: {
         type: String,
-        required:[true, "Please provide you're email."],
+        required: [true, "Please provide you're email."],
     },
-    password:{
+    password: {
         type: String,
-        required:[true, "Please provide a password."],
+        required: [true, "Please provide a password."],
     },
-    role:{
-        type:[Role],
-        require:[true],
+    role: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role',
+        require: [true],
         default: {
-            id:2
+            id: 2
         }
     },
-    isVerified:{
+    isVerified: {
         type: Boolean,
         default: false
     },
-    forgotPasswordToken:String,
-    forgotPasswordTokenExpriy:Date,
-    verifyToken:String,
-    verifyTokenExpiry:String, 
+    forgotPasswordToken: String,
+    forgotPasswordTokenExpriy: Date,
+    verifyToken: String,
+    verifyTokenExpiry: String,
 })
 
-const User = mongoose.models.user || mongoose.model("user", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

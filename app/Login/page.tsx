@@ -5,6 +5,9 @@ import { Box, Button, TextField, Checkbox, FormControlLabel, Link } from "@mui/m
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import EyeShown from "@mui/icons-material/Visibility"
+import EyeHidden from "@mui/icons-material/VisibilityOff"
+import Close from "@mui/icons-material/Close"
 import toast, { Toaster } from "react-hot-toast";
 
 
@@ -12,6 +15,8 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const toggleVisibility = () => setIsPasswordVisible(!isPasswordVisible);
     const router = useRouter();
 
     useEffect(() => {
@@ -41,12 +46,12 @@ const Login = () => {
                 case 400:
                     console.log(response.data.message);
                     toast.error(response.data.message, {
-                        className:"text-center"
+                        className: "text-center"
                     });
                     break;
                 case 500:
                     console.log(response.data.message);
-                    toast.error(`Server error : ${response.data.message}`,{
+                    toast.error(`Server error : ${response.data.message}`, {
                         className: "text-center",
                     })
                     break;
@@ -60,7 +65,7 @@ const Login = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <Toaster/>
+            <Toaster />
             <p>Sign in</p>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <Email sx={{ color: '#1976d2', mr: 1, my: 0.5 }} />
@@ -73,6 +78,13 @@ const Login = () => {
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setEmail(event.target.value)
                     }} />
+                <button
+                    aria-label="clear email"
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={() => { setEmail("") }}>
+                    <Close sx={{ color: '#94A3B8', ml: 0.5, my: 0.5, height: 22 }} />
+                </button>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <Lock sx={{ color: '#1976d2', mr: 1, my: 0.5 }} />
@@ -82,9 +94,21 @@ const Login = () => {
                     variant="standard"
                     className="w-full"
                     value={password}
+                    type={isPasswordVisible ? "text" : "password"}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setPassword(event.target.value);
                     }} />
+                <button
+                    aria-label="toggle password visibility"
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}>
+                    {isPasswordVisible ?
+                        <EyeShown sx={{ color: '#94A3B8', ml: 0.5, my: 0.5, height: 22 }} />
+                        :
+                        <EyeHidden sx={{ color: '#94A3B8', ml: 0.5, my: 0.5, height: 22 }} />
+                    }
+                </button>
             </Box>
             <Button variant="outlined" onClick={logIn} disabled={isButtonDisabled}>Sign in</Button>
         </div>

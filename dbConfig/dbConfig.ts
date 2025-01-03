@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 export async function connect(){
 
     try {
+
+        if (mongoose.connection.readyState >= 1) {
+            return;
+          }
+
         console.log(process.env.NEXT_PUBLIC_MONGO_URI);
         mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI!)
 

@@ -38,7 +38,7 @@ const AccountDrawer: React.FC<AccountDawerModalProps> = ({ isOpen, onOpenChange,
     }
 
     return (
-        <Drawer className="h-screen" backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} size="sm">
+        <Drawer placement="right" className="h-screen" backdrop="blur" isOpen={isOpen} onOpenChange={onOpenChange} size="sm">
             <Toaster/>
             <DrawerContent>
                 {(onClose) => (
